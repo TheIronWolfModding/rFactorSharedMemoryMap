@@ -14,6 +14,7 @@ private variables to track the current state of the memory map handle and buffer
 #include <time.h>
 
 #define PLUGIN_NAME "rFactorSharedMemoryMap"
+#define RF_SHARED_MEMORY_MAX_VSI_SIZE 64
 
 // This is used for app to find out information about the plugin
 class InternalsPluginInfo : public PluginObjectInfo
@@ -49,13 +50,6 @@ struct internalVI {
 	rfVec3 oriZ;
 	rfVec3 localRot;
 	rfVec3 localRotAccel;
-};
-
-struct internalSI {
-	float currentET;
-	int numVehicles;
-	char plrFileName[64];
-	internalVI vehicle[RF_SHARED_MEMORY_MAX_VSI_SIZE];
 };
 
 // This is used for the app to use the plugin for its intended purpose
@@ -130,5 +124,4 @@ class SharedMemoryMapPlugin : public InternalsPluginV3
   float cDelta;
   clock_t cLastScoringUpdate;
   bool inRealtime;
-  internalSI scoring;
 };

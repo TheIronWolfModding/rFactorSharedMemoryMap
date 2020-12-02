@@ -106,7 +106,6 @@ void SharedMemoryMapPlugin::Startup() {
 	mapped = TRUE;
 	if (mapped) {
 		memset(pBuf, 0, sizeof(rfShared));
-		strcpy(pBuf->version, RF_SHARED_MEMORY_VERSION);
 	}
 	return;
 }
@@ -131,11 +130,9 @@ void SharedMemoryMapPlugin::StartSession() {
 	// zero-out buffer at start of session
 	if (mapped) {
 		memset(pBuf, 0, sizeof(rfShared));
-		strcpy(pBuf->version, RF_SHARED_MEMORY_VERSION);
 	}
 	cLastScoringUpdate = 0;
 	cDelta = 0;
-	scoring = { 0 };
 }
 
 void SharedMemoryMapPlugin::EndSession() {
@@ -226,26 +223,6 @@ void SharedMemoryMapPlugin::UpdateScoring( const ScoringInfoV2 &info ) {
 
 		pBuf->deltaTime = 0;
 
-		// update internal state
-		scoring.currentET = info.mCurrentET;
-		scoring.numVehicles = info.mNumVehicles;
-		strcpy(scoring.plrFileName, info.mPlrFileName);
-		for (int i = 0; i < RF_SHARED_MEMORY_MAX_VSI_SIZE; i++) {
-			if (i < scoring.numVehicles) {
-				scoring.vehicle[i].lapDist = info.mVehicle[i].mLapDist;
-				scoring.vehicle[i].localAccel = { info.mVehicle[i].mLocalAccel.x, info.mVehicle[i].mLocalAccel.y, info.mVehicle[i].mLocalAccel.z };
-				scoring.vehicle[i].localRot = { info.mVehicle[i].mLocalRot.x, info.mVehicle[i].mLocalRot.y, info.mVehicle[i].mLocalRot.z };
-				scoring.vehicle[i].localRotAccel = { info.mVehicle[i].mLocalRotAccel.x, info.mVehicle[i].mLocalRotAccel.y, info.mVehicle[i].mLocalRotAccel.z };
-				scoring.vehicle[i].localVel = { info.mVehicle[i].mLocalVel.x, info.mVehicle[i].mLocalVel.y, info.mVehicle[i].mLocalVel.z };
-				scoring.vehicle[i].oriX = { info.mVehicle[i].mOriX.x, info.mVehicle[i].mOriX.y, info.mVehicle[i].mOriX.z };
-				scoring.vehicle[i].oriY = { info.mVehicle[i].mOriY.x, info.mVehicle[i].mOriY.y, info.mVehicle[i].mOriY.z };
-				scoring.vehicle[i].oriZ = { info.mVehicle[i].mOriZ.x, info.mVehicle[i].mOriZ.y, info.mVehicle[i].mOriZ.z };
-				scoring.vehicle[i].pos = { info.mVehicle[i].mPos.x, info.mVehicle[i].mPos.y, info.mVehicle[i].mPos.z };
-				continue;
-			}
-			scoring.vehicle[i] = { 0 };
-		}
-
 		// ScoringInfoBase
 		pBuf->session = info.mSession;
 		pBuf->currentET = info.mCurrentET;
@@ -301,13 +278,6 @@ void SharedMemoryMapPlugin::UpdateScoring( const ScoringInfoV2 &info ) {
 				pBuf->vehicle[i].lapsBehindLeader = info.mVehicle[i].mLapsBehindLeader;
 				pBuf->vehicle[i].lapStartET = info.mVehicle[i].mLapStartET;
 				pBuf->vehicle[i].pos = { info.mVehicle[i].mPos.x, info.mVehicle[i].mPos.y, info.mVehicle[i].mPos.z };
-				pBuf->vehicle[i].yaw = atan2f(info.mVehicle[i].mOriZ.x, info.mVehicle[i].mOriZ.z);
-				pBuf->vehicle[i].pitch = atan2f(-info.mVehicle[i].mOriY.z, 
-					sqrtf(info.mVehicle[i].mOriX.z * info.mVehicle[i].mOriX.z + 
-						info.mVehicle[i].mOriZ.z * info.mVehicle[i].mOriZ.z));
-				pBuf->vehicle[i].roll = atan2f(info.mVehicle[i].mOriY.x, 
-					sqrtf(info.mVehicle[i].mOriX.x * info.mVehicle[i].mOriX.x + 
-						info.mVehicle[i].mOriZ.x * info.mVehicle[i].mOriZ.x));
 				pBuf->vehicle[i].speed = sqrtf((info.mVehicle[i].mLocalVel.x * info.mVehicle[i].mLocalVel.x) +
 					(info.mVehicle[i].mLocalVel.y * info.mVehicle[i].mLocalVel.y) +
 					(info.mVehicle[i].mLocalVel.z * info.mVehicle[i].mLocalVel.z));
