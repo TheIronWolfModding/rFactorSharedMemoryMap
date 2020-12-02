@@ -118,9 +118,11 @@ void SharedMemoryMapPlugin::Shutdown() {
 	}
 	if (pBuf) {
 		UnmapViewOfFile(pBuf);
+    pBuf = NULL;
 	}
 	if (hMap) {
 		CloseHandle(hMap);
+    hMap = NULL;
 	}
 	mapped = FALSE;
 }
@@ -215,9 +217,9 @@ void SharedMemoryMapPlugin::UpdateTelemetry( const TelemInfoV2 &info ) {
 			pBuf->wheel[i].flat = info.mWheel[i].mFlat;
 			pBuf->wheel[i].detached = info.mWheel[i].mDetached;
 		}
-	}
 
-  pBuf->currentET = scoring.currentET;
+    pBuf->currentET = scoring.currentET;
+	}
 }
 
 void SharedMemoryMapPlugin::UpdateScoring( const ScoringInfoV2 &info ) {
