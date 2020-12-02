@@ -217,8 +217,6 @@ void SharedMemoryMapPlugin::UpdateTelemetry( const TelemInfoV2 &info ) {
 			pBuf->wheel[i].flat = info.mWheel[i].mFlat;
 			pBuf->wheel[i].detached = info.mWheel[i].mDetached;
 		}
-
-    pBuf->currentET = scoring.currentET;
 	}
 }
 
