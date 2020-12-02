@@ -131,8 +131,6 @@ void SharedMemoryMapPlugin::StartSession() {
 	if (mapped) {
 		memset(pBuf, 0, sizeof(rfShared));
 	}
-	cLastScoringUpdate = 0;
-	cDelta = 0;
 }
 
 void SharedMemoryMapPlugin::EndSession() {
@@ -150,11 +148,8 @@ void SharedMemoryMapPlugin::ExitRealtime() {
 
 void SharedMemoryMapPlugin::UpdateTelemetry( const TelemInfoV2 &info ) {
 	if (mapped) {
-		// update clock delta
-		cDelta = (float)(clock() - cLastScoringUpdate) / (float)CLOCKS_PER_SEC;
-
 		// TelemInfoBase
-		pBuf->deltaTime = cDelta;
+		pBuf->deltaTime = 0;
 		pBuf->lapNumber = info.mLapNumber;
 		pBuf->lapStartET = info.mLapStartET;
 		strcpy(pBuf->trackName, info.mTrackName);
@@ -219,8 +214,6 @@ void SharedMemoryMapPlugin::UpdateTelemetry( const TelemInfoV2 &info ) {
 
 void SharedMemoryMapPlugin::UpdateScoring( const ScoringInfoV2 &info ) {
 	if (mapped) {
-		cLastScoringUpdate = clock();
-
 		pBuf->deltaTime = 0;
 
 		// ScoringInfoBase

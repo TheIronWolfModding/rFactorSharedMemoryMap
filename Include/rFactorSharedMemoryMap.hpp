@@ -14,7 +14,6 @@ private variables to track the current state of the memory map handle and buffer
 #include <time.h>
 
 #define PLUGIN_NAME "rFactorSharedMemoryMap"
-#define RF_SHARED_MEMORY_MAX_VSI_SIZE 64
 
 // This is used for app to find out information about the plugin
 class InternalsPluginInfo : public PluginObjectInfo
@@ -121,7 +120,5 @@ class SharedMemoryMapPlugin : public InternalsPluginV3
   HANDLE hMap;
   rfShared* pBuf;
   bool mapped;
-  float cDelta;
-  clock_t cLastScoringUpdate;
   bool inRealtime;
 };

@@ -11,6 +11,7 @@ This means that you need to watch your types very closely!
 #pragma once
 
 #define RF_SHARED_MEMORY_NAME "$rFactorShared$"
+#define RF_SHARED_MEMORY_MAX_VSI_SIZE 64
 
 typedef enum {
   garage = 0,
