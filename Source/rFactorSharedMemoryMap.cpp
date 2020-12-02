@@ -153,6 +153,7 @@ void SharedMemoryMapPlugin::UpdateTelemetry( const TelemInfoV2 &info ) {
 		pBuf->lapNumber = info.mLapNumber;
 		pBuf->lapStartET = info.mLapStartET;
 		strcpy(pBuf->trackName, info.mTrackName);
+    strcpy(pBuf->vehicleName, info.mVehicleName);
 		pBuf->pos = { info.mPos.x, info.mPos.y, info.mPos.z };
 		pBuf->localVel = { info.mLocalVel.x, info.mLocalVel.y, info.mLocalVel.z };
 		pBuf->localAccel = { info.mLocalAccel.x, info.mLocalAccel.y, info.mLocalAccel.z };
@@ -242,6 +243,7 @@ void SharedMemoryMapPlugin::UpdateScoring( const ScoringInfoV2 &info ) {
 			if (i < info.mNumVehicles) {
 				// VehicleScoringInfo
 				strcpy(pBuf->vehicle[i].driverName, info.mVehicle[i].mDriverName);
+        strcpy(pBuf->vehicle[i].vehicleName, info.mVehicle[i].mVehicleName);
 				pBuf->vehicle[i].totalLaps = info.mVehicle[i].mTotalLaps;
 				pBuf->vehicle[i].sector = info.mVehicle[i].mSector;
 				pBuf->vehicle[i].finishStatus = info.mVehicle[i].mFinishStatus;
