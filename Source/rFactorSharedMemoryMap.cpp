@@ -155,7 +155,7 @@ void SharedMemoryMapPlugin::UpdateTelemetry( const TelemInfoV2 &info ) {
 		cDelta = (float)(clock() - cLastScoringUpdate) / (float)CLOCKS_PER_SEC;
 
 		// TelemInfoBase
-		pBuf->deltaTime = cDelta;
+		pBuf->deltaTime = info.mDeltaTime;
 		pBuf->lapNumber = info.mLapNumber;
 		pBuf->lapStartET = info.mLapStartET;
 		strcpy(pBuf->trackName, info.mTrackName);
@@ -333,7 +333,7 @@ void SharedMemoryMapPlugin::UpdateScoring( const ScoringInfoV2 &info ) {
 	if (mapped) {
 		cLastScoringUpdate = clock();
 
-		pBuf->deltaTime = 0;
+		//pBuf->deltaTime = 0;
 
 		// update internal state
 		scoring.currentET = info.mCurrentET;
