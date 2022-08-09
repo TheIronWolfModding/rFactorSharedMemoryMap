@@ -10,6 +10,7 @@ private variables to track the current state of the memory map handle and buffer
 
 #include "InternalsPlugin.hpp"
 #include "rfSharedStruct.hpp"
+
 #include <Windows.h>
 #include <time.h>
 
