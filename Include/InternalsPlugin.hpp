@@ -19,6 +19,8 @@
 
 #include "RFPluginObjects.hpp"
 
+#pragma pack(push, 4)
+
 // change this variable whenever a change is made to the plugin interfaces
 // use m_uVersion (returned by GetVersion() for version control instead //#define INTERNALS_PLUGIN_VERSION (0.0f)
 
@@ -366,5 +368,6 @@ class InternalsPluginV3 : public InternalsPluginV2 // for noobs: InternalsPlugin
 //旼컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴커
 //읕컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴켸
 
+#pragma pack(pop)
 #endif // _INTERNALS_PLUGIN_HPP_
 

@@ -21,6 +21,7 @@
 
 #include <windows.h>
 
+#pragma pack(push, 4)
 
 // forward referencing stuff
 class PluginObjectInfo;
@@ -126,8 +127,6 @@ public:
   virtual void* Create() const = 0;
 };
 
-
-
-
+#pragma pack(pop)
 
 #endif
