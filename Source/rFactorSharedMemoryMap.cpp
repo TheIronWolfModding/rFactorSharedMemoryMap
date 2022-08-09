@@ -149,7 +149,7 @@ void SharedMemoryMapPlugin::ExitRealtime() {
 void SharedMemoryMapPlugin::UpdateTelemetry( const TelemInfoV2 &info ) {
 	if (mapped) {
 		// TelemInfoBase
-		pBuf->deltaTime = 0;
+		pBuf->deltaTime = info.mDeltaTime;
 		pBuf->lapNumber = info.mLapNumber;
 		pBuf->lapStartET = info.mLapStartET;
 		strcpy(pBuf->trackName, info.mTrackName);
@@ -215,8 +215,6 @@ void SharedMemoryMapPlugin::UpdateTelemetry( const TelemInfoV2 &info ) {
 
 void SharedMemoryMapPlugin::UpdateScoring( const ScoringInfoV2 &info ) {
 	if (mapped) {
-		pBuf->deltaTime = 0;
-
 		// ScoringInfoBase
 		pBuf->session = info.mSession;
 		pBuf->currentET = info.mCurrentET;
